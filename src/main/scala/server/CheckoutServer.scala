@@ -8,7 +8,7 @@ import service.CheckoutSessionService
 import scala.util.Properties.envOrNone
 
 object CheckoutServer  extends StreamApp {
-  val port: Int = envOrNone("HTTP_PORT").fold(8080)(_.toInt)
+  val port: Int = envOrNone("HTTP_PORT").fold(8479)(_.toInt)
 
   def stream(args: List[String]): fs2.Stream[Task, Nothing] =
     BlazeBuilder
