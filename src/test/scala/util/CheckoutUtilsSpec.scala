@@ -5,13 +5,27 @@ import util.CheckoutUtils._
 import org.scalatest.{Matchers, WordSpec}
 import pricing.{MultiBuyPricingRule, SimplePricingRule}
 
+import scala.util.{Success, Failure}
+
 class CheckoutUtilsSpec extends WordSpec with Matchers {
 
-  "Scanning a new Item" should {
-    "result in a list with the new item appended" in {
-      val items = List(Sku("apple"), Sku("banana"))
-      val newItem = Sku("carrot")
-      scan(items, newItem) shouldEqual List(Sku("apple"), Sku("banana"), Sku("carrot"))
+  "Scanning a new Item" when {
+    "the item scanned is valid" should {
+      "result in a Success containing a list with the new item appended" in {
+        val items = List(Sku("apple"), Sku("banana"))
+        val newItem = Sku("carrot")
+        val validItems = List(Sku("apple"), Sku("banana"), Sku("carrot"))
+        scan(items, newItem, validItems) shouldEqual Success(List(Sku("apple"), Sku("banana"), Sku("carrot")))
+      }
+    }
+
+    "the item scanned is invalid" should {
+      "fail" in {
+        val items = List(Sku("apple"), Sku("banana"))
+        val newItem = Sku("carrot")
+        val validItems = List(Sku("apple"), Sku("banana"))
+        scan(items, newItem, validItems).isFailure shouldEqual true
+      }
     }
   }
 
