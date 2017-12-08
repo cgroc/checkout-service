@@ -2,6 +2,7 @@ package pricing
 
 import domain.Sku
 
+//assumption for now is that the list contains only one kind of Sku
 sealed trait PricingRule {
   def calculateCost(items: List[Sku]): Int
 }
